@@ -2,6 +2,12 @@ import axios from 'axios'
 import React from 'react'
 import {dataContext} from './Contexpage'
 
+import {followCursor} from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+
+import Tippy from '@tippy.js/react';
+import 'tippy.js/dist/tippy.css';
+
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -24,6 +30,8 @@ import pluto from '../images/pluto.png';
 import saturn from '../images/saturn.jpg';
 import venus from '../images/venus.jpg';
 
+import { useSnackbar } from 'notistack';
+
 
 // importing useEffect hook , useState, useContext
 const {useState, useEffect,useContext } = React
@@ -37,7 +45,15 @@ export const useStyles = makeStyles((theme) => ({
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
     },
+    root2:{
+        marginTop:theme.spacing(10),
+        [theme.breakpoints.down('sm')]: {
+            marginTop:theme.spacing(13.5)
+          },
+        
+    },
     gridList: {
+
       flexWrap: 'wrap',
       // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
       transform: 'translateZ(0)',
@@ -45,9 +61,12 @@ export const useStyles = makeStyles((theme) => ({
     title: {
       color: theme.palette.secondary.light,
     },
+    nameTitle:{
+      color: theme.palette.grey.light,
+    },
     titleBar: {
       background:
-        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0) 100%)',
     },
 
   }));
@@ -78,11 +97,12 @@ const Planet = ()=> {
     const [drawerActivate, setdrawerActivate] = useState(false)
     const [imagesSet, setimagesSet] = useState(initialState)
     const [favirateClick, setfavirateClick] = useState({idStore:[],returnPlanet:[]})
-
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     //Doing API requests using axios third party module 
     useEffect(()=>{
         // console.log(favoriteData.newdata.planetStore,"u");
+        setfavirateClick({...favirateClick,idStore:favoriteData.newdata.returnToHome})
          axios.get('https://assignment-machstatz.herokuapp.com/planet')
         .then(res=>
             favoriteData.newdata.planetStore.length >=1 ?
@@ -108,7 +128,7 @@ const Planet = ()=> {
         });
         setfavirateClick({...favirateClick,idStore:favoriteData.newdata.returnToHome,
             returnPlanet:favoriteData.newdata.returnToplanetData})
-        if(favoriteData.newdata.planetStore.length>=1){
+        if(favoriteData.newdata.planetStore===null || favoriteData.newdata.planetStore.length >=1 ){
             setplanetDetails(favoriteData.newdata.planetStore)
         }
         console.log(planetDetails,favoriteData.newdata.planetStore,"eeeee");
@@ -119,7 +139,7 @@ const Planet = ()=> {
 
     useEffect(()=>{
         setnewdata({...newdata,favoriteStore:favirateClick.idStore,planetStore:planetDetails})
-        if(favirateClick.returnPlanet.length>=1){
+        if(favoriteData.newdata.planetStore===null || favirateClick.returnPlanet.length>=1){
             setnewdata({...newdata,planetStore:favirateClick.returnPlanet,favoriteStore:favirateClick.idStore})
         }
     },[favirateClick])
@@ -134,8 +154,8 @@ const Planet = ()=> {
         }
     }
 
-    const handleFavirate =(id)=>{
-        console.log(planetDetails,"hhhh",id);
+    const handleFavirate =(id,variant)=>{
+        console.log(favirateClick.idStore,"hhhh",id,variant);
 
         for (let each of planetDetails){
             // if(each.id===id){
@@ -149,29 +169,36 @@ const Planet = ()=> {
 
         setplanetDetails(planetDetails)
         if(favirateClick.idStore.includes(id)){
+            console.log("inside if");
             const newidStore = favirateClick.idStore.filter(planet=>planet !== id)
             setfavirateClick({...favirateClick,idStore:newidStore})
-            for (let each of planetDetails){
-                if(each.id===id && !newidStore.includes(id)){
-                    each.isFavourite=false
-                }
-            }
+            enqueueSnackbar('Removed from the Favorite', {variant} );
+            // for (let each of planetDetails){
+            //     if(each.id===id && !newidStore.includes(id)){
+            //         each.isFavourite=false
+            //     }
+            // }
         }
         else{
+            console.log("outside if");
             setfavirateClick({...favirateClick,idStore:[...favirateClick.idStore,id]})  
+            enqueueSnackbar('Added to the Fivorite',{ variant });
         }
            setnewdata({...newdata,planetStore:favirateClick.returnPlanet})
-        console.log(favirateClick,planetDetails,"second")
+        // console.log(favirateClick.idStore,"second",favoriteData.newdata.returnToHome)
     }
     // console.log(planetDetails)
     // console.log(favirateClick,"f",planetDetails)
 
 // saloni@iesl.co
+// console.log(favirateClick.idStore,"k")
+
     return (
         <div  className={classes.root}>
 
         {/* <Container maxWidth="md"> */}
             {/* <Grid item xs={6}> */}
+            <div className={classes.root2}>
         <GridList className={classes.gridList} cellHeight={drawerActivate ? 180:350}  cols={drawerActivate ? 2:3}>
             {planetDetails ? planetDetails.map((tile) => (
             <GridListTile key={tile.id} className="imagehover">
@@ -180,22 +207,31 @@ const Planet = ()=> {
                 title={tile.name}
                 classes={{
                     root: classes.titleBar,
-                    title: classes.title,
+                    title: classes.nameTitle,
                 }}
                 actionIcon={
-                    <IconButton aria-label={`star ${tile.name}`} onClick={()=>handleFavirate(tile.id)} >
+                    <Tippy
+                        content={<span style={{color:"#FF007F"}} >Favorite</span>}
+                        arrow={true}
+                        animation="fade"
+                        duration={0}
+                        delay={[100, 0]}
+                        followCursor={true} plugins={[followCursor]}
+                        // ...and many more!
+                        >
+                    <IconButton aria-label={`star ${tile.name}`} onClick={()=>handleFavirate(tile.id,"success")} >
 
-                    {favoriteData.newdata.returnToHome ? 
-                    favoriteData.newdata.returnToHome.includes(tile.id) ? <FavoriteIcon className={classes.title} />:
-                    
-                    tile.isFavourite && favirateClick.idStore.includes(tile.id) ? 
-                    <FavoriteIcon className={classes.title} /> :
-                    <FavoriteBorderIcon className={classes.title} />
-                    : tile.isFavourite && favirateClick.idStore.includes(tile.id) ? 
-                    <FavoriteIcon className={classes.title} /> :
-                    <FavoriteBorderIcon className={classes.title} />
-                }   
+                    {/* {favoriteData.newdata.returnToHome ? 
+                    favoriteData.newdata.returnToHome.includes(tile.id) ? 
+                    <FavoriteIcon className={classes.title} /> 
+                    :<FavoriteBorderIcon className={classes.title} />:null
+                    }    */}
+                    {tile.isFavourite && favirateClick.idStore.includes(tile.id) ? 
+
+                    <FavoriteIcon className={classes.title} /> : <FavoriteBorderIcon className={classes.title} />}
                     </IconButton>
+                    </Tippy>
+
                 }
                 />
                 </GridListTile>
@@ -203,6 +239,7 @@ const Planet = ()=> {
         </GridList>
         {/* </Grid> */}
         {/* </Container> */}
+        </div>
         </div>
     )
 }

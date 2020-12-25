@@ -3,6 +3,7 @@ import {dataContext} from './Contexpage';
 
 import axios from 'axios'
 
+import { useSnackbar } from 'notistack';
 
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -13,18 +14,11 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
+import hello from '../images/hello.gif';
+import seaching from '../images/seaching.gif';
+import looking from '../images/looking.gif';
+import galaxy from '../images/galaxy.jpg'
 
-import ceres from '../images/cares.jpg';
-import earth from '../images/earth.jpg';
-import eris from '../images/eris.jpg';
-import haumea from '../images/haumea.jpg';
-import jupiter from '../images/jupiter.jpg';
-import makemake from '../images/makemake.jpg';
-import mars from '../images/mars.png';
-import mercury from '../images/mercury.jpg';
-import pluto from '../images/pluto.png';
-import saturn from '../images/saturn.jpg';
-import venus from '../images/venus.jpg';
 
 export const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,7 +27,18 @@ export const useStyles = makeStyles((theme) => ({
       justifyContent:'space-evenly',
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
+    //   backgroundImage: `url(${ galaxy })`,
+    //   backgroundRepeat:'no-repeat',
+      
     },
+    root2:{
+        marginTop:theme.spacing(10),
+        [theme.breakpoints.down('sm')]: {
+            marginTop:theme.spacing(13.5)
+          },
+        
+    },
+
     gridList: {
       flexWrap: 'wrap',
       // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
@@ -52,36 +57,15 @@ export const useStyles = makeStyles((theme) => ({
 export default function Favorite() {
     const [drawerActivate, setdrawerActivate] = useState(false)
     const [favirateClick, setfavirateClick] = useState({idStore:[],newSetdata:[]})
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const {newdata,setnewdata} = useContext(dataContext)
 
-    const [planetDetails, setplanetDetails] = useState(null)
-    const initialState = {
-        ceres:ceres,
-        earth:earth,
-        eris:eris,
-        haumea:haumea,
-        jupiter:jupiter,
-        makemake:makemake,
-        mars:mars,
-        mercury:mercury,
-        pluto:pluto,
-        saturn:saturn,
-        venus:venus
-
-    }
-    const [imagesSet, setimagesSet] = useState(initialState)
+  
 
     const classes = useStyles()
-    React.useEffect(()=>{
-        axios.get('https://assignment-machstatz.herokuapp.com/planet')
-        .then(res=>
-            // favoriteData.newdata.returnToHome ?
-            // setplanetDetails(null):
-            setplanetDetails(res.data)
-            )
-        .catch(err=>console.log(err))
     
+    React.useEffect(()=>{
        if (window.innerWidth <= 600) {
            setdrawerActivate(true);
        }
@@ -102,8 +86,9 @@ export default function Favorite() {
     setnewdata({...newdata,returnToHome:favirateClick.idStore,returnToplanetData:favirateClick.newSetdata})
 },[favirateClick])
 
-   const handleFavirate =(id)=>{
+   const handleFavirate =(id,warning)=>{
     console.log("hhhh",id);
+    enqueueSnackbar('Removed from Favorite',{warning});
 
     if(favoriteData.newdata.favoriteStore.includes(id)){
         for (let each of favoriteData.newdata.planetStore){
@@ -118,30 +103,22 @@ export default function Favorite() {
             }
         }
     }
-    if(planetDetails) {
-        for (var property in imagesSet) {
-            for(var eachItem of planetDetails){
-                if(eachItem.id === property){
-                    eachItem["image"] =imagesSet[property]
-                }
-            }
-        }
-    }
+   
 
     if(favoriteData.newdata.favoriteStore.includes(id)){
         const newidStore = favoriteData.newdata.favoriteStore.filter(planet=>planet !== id)
         setfavirateClick({...favirateClick,idStore:newidStore})
-        for (let each of favoriteData.newdata.planetStore){
-            if(each.id===id && newidStore.includes(id)){
-                each.isFavourite=true
-            }
-        }
+
+       
     }
     else{
-        setfavirateClick({...favirateClick,idStore:[...favirateClick.idStore,id]})  
+        setfavirateClick({...favirateClick,idStore:[...favirateClick.idStore,id]})  .
+        enqueueSnackbar('Added to Fivorite',{warning});
+
     }
        
 }
+
 
     const favoriteData = useContext(dataContext)
     console.log(favoriteData.newdata,"favoriteee");
@@ -152,6 +129,7 @@ export default function Favorite() {
 
           {/* <Container maxWidth="md"> */}
               {/* <Grid item xs={6}> */}
+              <div className={classes.root2}>
           <GridList className={classes.gridList} cellHeight={drawerActivate ? 180:350}  cols={drawerActivate ? 2:3}>
               {favoriteData.newdata.planetStore ? favoriteData.newdata.planetStore.map((tile) => (
                    tile.isFavourite && favoriteData.newdata.favoriteStore.includes(tile.id) ?
@@ -164,12 +142,10 @@ export default function Favorite() {
                       title: classes.title,
                   }}
                   actionIcon={
-                      <IconButton aria-label={`star ${tile.name}`}
-                       onClick={()=>handleFavirate(tile.id)}
+                      <IconButton aria-label={`star ${tile.name}`} onClick={()=>handleFavirate(tile.id,"warning")}
                         >
                       {tile.isFavourite && favoriteData.newdata.favoriteStore.includes(tile.id) ? 
-                      <FavoriteIcon className={classes.title} /> :
-                                      <FavoriteBorderIcon className={classes.title} />
+                      <FavoriteIcon className={classes.title} /> :null
                       }  
 
                       </IconButton>
@@ -177,7 +153,16 @@ export default function Favorite() {
                   />
                   </GridListTile>:null
               )): null}
+                                    {/* <h3>you don't have favorite</h3> */}
+            {favoriteData.newdata.favoriteStore.length>=1 ?
+                null
+            : <div>
+                <img src={seaching} alt={seaching} /> 
+             </div>}
+
+
           </GridList>
+          </div>
           {/* </Grid> */}
           {/* </Container> */}
           </div>
