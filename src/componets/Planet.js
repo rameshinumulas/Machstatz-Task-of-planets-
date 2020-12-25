@@ -77,7 +77,6 @@ const Planet = ()=> {
 
     const classes = useStyles()
     const {newdata,setnewdata} = useContext(dataContext)
-    // console.log(newdata,"cccc",favoriteData.newdata.planetStore);
 
     const [planetDetails, setplanetDetails] = useState(null)
     const initialState = {
@@ -101,7 +100,6 @@ const Planet = ()=> {
 
     //Doing API requests using axios third party module 
     useEffect(()=>{
-        // console.log(favoriteData.newdata.planetStore,"u");
         setfavirateClick({...favirateClick,idStore:favoriteData.newdata.returnToHome})
          axios.get('https://assignment-machstatz.herokuapp.com/planet')
         .then(res=>
@@ -114,7 +112,6 @@ const Planet = ()=> {
 
 
         if (window.innerWidth <= 600) {
-            console.log(window.innerWidth);
             setdrawerActivate(true);
         }
 
@@ -131,11 +128,9 @@ const Planet = ()=> {
         if(favoriteData.newdata.planetStore===null || favoriteData.newdata.planetStore.length >=1 ){
             setplanetDetails(favoriteData.newdata.planetStore)
         }
-        console.log(planetDetails,favoriteData.newdata.planetStore,"eeeee");
         // setnewdata({...newdata,planetStore:favoriteData.newdata.returnToplanetData,favoriteStore:favirateClick.idStore})
 
     },[])
-    // console.log(planetDetails,"o");
 
     useEffect(()=>{
         setnewdata({...newdata,favoriteStore:favirateClick.idStore,planetStore:planetDetails})
@@ -155,7 +150,6 @@ const Planet = ()=> {
     }
 
     const handleFavirate =(id,variant)=>{
-        console.log(favirateClick.idStore,"hhhh",id,variant);
 
         for (let each of planetDetails){
             // if(each.id===id){
@@ -169,7 +163,6 @@ const Planet = ()=> {
 
         setplanetDetails(planetDetails)
         if(favirateClick.idStore.includes(id)){
-            console.log("inside if");
             const newidStore = favirateClick.idStore.filter(planet=>planet !== id)
             setfavirateClick({...favirateClick,idStore:newidStore})
             enqueueSnackbar('Removed from the Favorite', {variant} );
@@ -180,18 +173,12 @@ const Planet = ()=> {
             // }
         }
         else{
-            console.log("outside if");
             setfavirateClick({...favirateClick,idStore:[...favirateClick.idStore,id]})  
             enqueueSnackbar('Added to the Fivorite',{ variant });
         }
            setnewdata({...newdata,planetStore:favirateClick.returnPlanet})
-        // console.log(favirateClick.idStore,"second",favoriteData.newdata.returnToHome)
     }
-    // console.log(planetDetails)
-    // console.log(favirateClick,"f",planetDetails)
-
-// saloni@iesl.co
-// console.log(favirateClick.idStore,"k")
+    
 
     return (
         <div  className={classes.root}>

@@ -87,7 +87,6 @@ export default function Favorite() {
 },[favirateClick])
 
    const handleFavirate =(id,warning)=>{
-    console.log("hhhh",id);
     enqueueSnackbar('Removed from Favorite',{warning});
 
     if(favoriteData.newdata.favoriteStore.includes(id)){
@@ -121,7 +120,6 @@ export default function Favorite() {
 
 
     const favoriteData = useContext(dataContext)
-    console.log(favoriteData.newdata,"favoriteee");
     return (
         
             <div  className={classes.root}>
