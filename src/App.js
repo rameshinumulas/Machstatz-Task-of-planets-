@@ -81,9 +81,8 @@ export default function App() {
         <dataContext.Provider value={{newdata,setnewdata}}>
         <div>
             <div className={drawerActivate ? classes.views:classes.afterWidth} >
-            <Link to="/Machstatz-Task-of-planets-" style={{textDecoration:'none'}}><Button variant="contained" color={window.location.pathname==='/Machstatz-Task-of-planets-' ?"primary":"secondary"}>View all</Button>
+            <Link to="/" style={{textDecoration:'none'}}><Button variant="contained" color={window.location.pathname==='/' ?"primary":"secondary"}>View all</Button>
             </Link>
-
                 <h2>Machstatz Planets Gallery</h2>
                 <Link to="/Machstatz-Task-of-planets/fav" style={{textDecoration:'none'}}> <Button variant="contained" color={window.location.pathname==='/Machstatz-Task-of-planets/fav' ?"primary":"secondary"}>
                 View Favorite</Button>
@@ -92,7 +91,7 @@ export default function App() {
             {/* <div > */}
             <SnackbarProvider maxSnack={1}>
            
-            <Route exact path="/Machstatz-Task-of-planets-" component={Planet} />
+            <Route exact path="/" component={Planet} />
             <Route exact path="/Machstatz-Task-of-planets/fav" component={Favorite} />
             </SnackbarProvider>
             {/* </div> */}
