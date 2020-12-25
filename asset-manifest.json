@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Machstatz-Task-of-planets-/static/css/main.e31680f5.chunk.css",
-    "main.js": "/Machstatz-Task-of-planets-/static/js/main.9d739b2b.chunk.js",
-    "main.js.map": "/Machstatz-Task-of-planets-/static/js/main.9d739b2b.chunk.js.map",
+    "main.js": "/Machstatz-Task-of-planets-/static/js/main.5d80bec0.chunk.js",
+    "main.js.map": "/Machstatz-Task-of-planets-/static/js/main.5d80bec0.chunk.js.map",
     "runtime-main.js": "/Machstatz-Task-of-planets-/static/js/runtime-main.f4e9d6ee.js",
     "runtime-main.js.map": "/Machstatz-Task-of-planets-/static/js/runtime-main.f4e9d6ee.js.map",
     "static/css/2.a94b6df7.chunk.css": "/Machstatz-Task-of-planets-/static/css/2.a94b6df7.chunk.css",
@@ -33,6 +33,6 @@
     "static/css/2.a94b6df7.chunk.css",
     "static/js/2.09d08806.chunk.js",
     "static/css/main.e31680f5.chunk.css",
-    "static/js/main.9d739b2b.chunk.js"
+    "static/js/main.5d80bec0.chunk.js"
   ]
 }
