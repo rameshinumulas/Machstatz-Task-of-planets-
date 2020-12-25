@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/Machstatz-Task-of-planets-/static/css/main.e31680f5.chunk.css",
+    "main.js": "/Machstatz-Task-of-planets-/static/js/main.9d739b2b.chunk.js",
+    "main.js.map": "/Machstatz-Task-of-planets-/static/js/main.9d739b2b.chunk.js.map",
+    "runtime-main.js": "/Machstatz-Task-of-planets-/static/js/runtime-main.f4e9d6ee.js",
+    "runtime-main.js.map": "/Machstatz-Task-of-planets-/static/js/runtime-main.f4e9d6ee.js.map",
+    "static/css/2.a94b6df7.chunk.css": "/Machstatz-Task-of-planets-/static/css/2.a94b6df7.chunk.css",
+    "static/js/2.09d08806.chunk.js": "/Machstatz-Task-of-planets-/static/js/2.09d08806.chunk.js",
+    "static/js/2.09d08806.chunk.js.map": "/Machstatz-Task-of-planets-/static/js/2.09d08806.chunk.js.map",
+    "index.html": "/Machstatz-Task-of-planets-/index.html",
+    "static/css/2.a94b6df7.chunk.css.map": "/Machstatz-Task-of-planets-/static/css/2.a94b6df7.chunk.css.map",
+    "static/css/main.e31680f5.chunk.css.map": "/Machstatz-Task-of-planets-/static/css/main.e31680f5.chunk.css.map",
+    "static/js/2.09d08806.chunk.js.LICENSE.txt": "/Machstatz-Task-of-planets-/static/js/2.09d08806.chunk.js.LICENSE.txt",
+    "static/media/cares.b4a7e460.jpg": "/Machstatz-Task-of-planets-/static/media/cares.b4a7e460.jpg",
+    "static/media/earth.59356595.jpg": "/Machstatz-Task-of-planets-/static/media/earth.59356595.jpg",
+    "static/media/eris.d40663cf.jpg": "/Machstatz-Task-of-planets-/static/media/eris.d40663cf.jpg",
+    "static/media/galaxy.e014da4b.jpg": "/Machstatz-Task-of-planets-/static/media/galaxy.e014da4b.jpg",
+    "static/media/haumea.e8f81732.jpg": "/Machstatz-Task-of-planets-/static/media/haumea.e8f81732.jpg",
+    "static/media/hello.7e065904.gif": "/Machstatz-Task-of-planets-/static/media/hello.7e065904.gif",
+    "static/media/jupiter.34448a74.jpg": "/Machstatz-Task-of-planets-/static/media/jupiter.34448a74.jpg",
+    "static/media/looking.03e13a53.gif": "/Machstatz-Task-of-planets-/static/media/looking.03e13a53.gif",
+    "static/media/makemake.a8c76bfa.jpg": "/Machstatz-Task-of-planets-/static/media/makemake.a8c76bfa.jpg",
+    "static/media/mars.edc51318.png": "/Machstatz-Task-of-planets-/static/media/mars.edc51318.png",
+    "static/media/mercury.14f4d4d6.jpg": "/Machstatz-Task-of-planets-/static/media/mercury.14f4d4d6.jpg",
+    "static/media/pluto.27ebc8b8.png": "/Machstatz-Task-of-planets-/static/media/pluto.27ebc8b8.png",
+    "static/media/saturn.d8472a0b.jpg": "/Machstatz-Task-of-planets-/static/media/saturn.d8472a0b.jpg",
+    "static/media/seaching.30a3c4d3.gif": "/Machstatz-Task-of-planets-/static/media/seaching.30a3c4d3.gif",
+    "static/media/venus.a47eceaa.jpg": "/Machstatz-Task-of-planets-/static/media/venus.a47eceaa.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f4e9d6ee.js",
+    "static/css/2.a94b6df7.chunk.css",
+    "static/js/2.09d08806.chunk.js",
+    "static/css/main.e31680f5.chunk.css",
+    "static/js/main.9d739b2b.chunk.js"
+  ]
+}
